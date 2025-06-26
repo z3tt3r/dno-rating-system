@@ -19,10 +19,10 @@ public class Client {
     private Long id;
 
     @Column(nullable = false)
-    private String firstName;
+    private String name;
 
     @Column(nullable = false)
-    private String lastName;
+    private String street;
 
     @Column(nullable = false)
     private String houseNumber;
@@ -37,9 +37,6 @@ public class Client {
 
     @Column(nullable = false)
     private String postcode;
-
-    @Column(nullable = false)
-    private String country;
 
     @Column(unique = true, nullable = false)
     private String ico;

@@ -31,8 +31,8 @@ public class Risk {
     @Column(nullable = false)
     private FinancialPerformance financialPerformance;
 
-    @Column(nullable = false, precision = 7, scale = 5)
-    private BigDecimal brokerComission;
+    @Column(name = "broker_commission", nullable = false, precision = 7, scale = 5)
+    private BigDecimal brokerCommission;
 
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal nettoPremium;
