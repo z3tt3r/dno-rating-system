@@ -1,6 +1,7 @@
 package cz.michalmusil.dnoratingsystem.controller;
 
 import cz.michalmusil.dnoratingsystem.dto.ClientRequestDto;
+import cz.michalmusil.dnoratingsystem.dto.ClientResponseDto;
 import cz.michalmusil.dnoratingsystem.dto.RiskRequestDto;
 import cz.michalmusil.dnoratingsystem.dto.RiskResponseDto;
 import cz.michalmusil.dnoratingsystem.model.Client;
@@ -63,7 +64,7 @@ public class RiskController {
             risk.setTurnover(riskRequestDto.getTurnoverInFullAmount());
             risk.setLimitAmount(riskRequestDto.getLimitInFullAmount());
             risk.setFinancialPerformance(riskRequestDto.getFinancialPerformance());
-            risk.setBrokerCommission(riskRequestDto.getBrokerCommissionAsDecimal());
+            risk.setBrokerCommissionPercentage(riskRequestDto.getBrokerCommissionAsDecimal());
             risk.setNettoPremium(BigDecimal.ZERO);
             risk.setClient(client);
 
@@ -89,7 +90,11 @@ public class RiskController {
     }
 
     @GetMapping("/clients")
-    public ResponseEntity<Iterable<Client>> getAllClients() {
-        return new ResponseEntity<>(clientRepository.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<ClientResponseDto>> getAllClients() {
+        List<Client> clients = (List<Client>) clientRepository.findAll(); // findAll returns Iterable, cast to List
+        List<ClientResponseDto> dtos = clients.stream()
+                .map(ClientResponseDto::fromEntity) // Použij novou metodu!
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 }

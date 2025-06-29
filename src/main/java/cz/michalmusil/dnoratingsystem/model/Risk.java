@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime; // <-- DŮLEŽITÝ IMPORT
 
 @Entity
 @Table(name = "risks")
@@ -31,11 +32,14 @@ public class Risk {
     @Column(nullable = false)
     private FinancialPerformance financialPerformance;
 
-    @Column(name = "broker_commission", nullable = false, precision = 7, scale = 5)
-    private BigDecimal brokerCommission;
+    @Column(name = "broker_commission_percentage", nullable = false, precision = 7, scale = 5)
+    private BigDecimal brokerCommissionPercentage; // Přejmenováno pro jasnost
 
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal nettoPremium;
+
+    @Column(name = "calculation_date", nullable = false) // Můžete nastavit nullable na false, pokud je vždy požadováno
+    private LocalDateTime calculationDate;
 
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
