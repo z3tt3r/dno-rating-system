@@ -37,10 +37,10 @@ public class RatingService {
     private static final BigDecimal TURNOVER_THRESHOLD_750M = new BigDecimal("750000000"); // 750 milionů
 
     // Koeficienty pro obrat
-    private static final BigDecimal COEFFICIENT_UP_TO_100M = new BigDecimal("0.0001");
-    private static final BigDecimal COEFFICIENT_100M_TO_500M = new BigDecimal("0.00005");
-    private static final BigDecimal COEFFICIENT_500M_TO_750M = new BigDecimal("0.00002");
-    private static final BigDecimal COEFFICIENT_ABOVE_750M = new BigDecimal("0.00001");
+    private static final BigDecimal COEFFICIENT_UP_TO_100M = new BigDecimal("0.001");
+    private static final BigDecimal COEFFICIENT_100M_TO_500M = new BigDecimal("0.0012");
+    private static final BigDecimal COEFFICIENT_500M_TO_750M = new BigDecimal("0.0015");
+    private static final BigDecimal COEFFICIENT_ABOVE_750M = new BigDecimal("0.0018");
 
     // Slevové koeficienty pro pásma limitů
     private static final BigDecimal DISCOUNT_10_20M = new BigDecimal("0.05"); // 5% sleva (tj. multiplikátor 0.95)
@@ -103,7 +103,7 @@ public class RatingService {
             throw new IllegalArgumentException("Limit amount (" + limitAmount + " CZK) cannot be greater than effective turnover (" + effectiveTurnover + " CZK).");
         }
 
-        // 4. Určení základní sazby za milion pro první pásmo (0-10M)
+        // 4. Určení základní sazby za milion dle pasma
         BigDecimal turnoverCoefficient;
         if (effectiveTurnover.compareTo(TURNOVER_THRESHOLD_100M) <= 0) {
             turnoverCoefficient = COEFFICIENT_UP_TO_100M;
